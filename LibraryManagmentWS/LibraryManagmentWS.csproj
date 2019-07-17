@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Protos\Library.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="Protos\Library.proto" GrpcServices="Server" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore.Server" Version="0.1.22-pre1" />
+    <PackageReference Include="Google.Protobuf" Version="3.9.0" />
+
+    <PackageReference Include="Grpc.Tools" Version="1.22.0" PrivateAssets="All" />
+
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.0.0-preview6.19304.10" />
+
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="3.0.0-preview6.19304.10" />
+
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.0.0-preview6.19304.10" />
+
+    <PackageReference Include="SmsIrRestfulNetCore" Version="1.1.4" />
+
+    <PackageReference Include="System.Drawing.Common" Version="4.5.1" />
+  </ItemGroup>
+
+</Project>

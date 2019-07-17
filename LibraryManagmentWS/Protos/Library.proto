@@ -1,0 +1,302 @@
+syntax = "proto3";
+
+option csharp_namespace = "LibraryManagmentWS";
+
+package Library;
+
+service LibraryManager {
+  rpc ServerAvailable (HelloRequest) returns (HelloReply) {};
+  rpc LibraryRegister (LibraryRegisterRequest) returns (LibraryRegisterReply) {};
+  rpc LibraryEdit (LibraryEditRequest) returns (LibraryEditReply) {};
+  rpc AddUser (AddUserRequest) returns (AddUserReply) {};
+  rpc AddBook (AddBookRequest) returns (AddBookReply) {};
+  rpc RemoveBook (RemoveBookRequest) returns (RemoveBookReply) {};
+  rpc BookDetail (BookDetailRequest) returns (BookDetailReply) {};
+  rpc BookList (BookListRequest) returns (BookListReply) {};
+  rpc BookRentingSystemList (BookRentingSystemListRequest) returns (BookRentingSystemListReply) {};
+  rpc BookRentingSystemNotificationCount (BookRentingSystemNotificationCountRequest) returns (BookRentingSystemNotificationCountReply) {};
+  rpc RentABook (RentABookRequest) returns (RentABookReply) {};
+  rpc AcceptRentRequest (AcceptRentRequestRequest) returns (AcceptRentRequestReply) {};
+  rpc RejectRentRequest (RejectRentRequestRequest) returns (RejectRentRequestReply) {};
+  rpc CancelRentBook (CancelRentBookRequest) returns (CancelRentBookReply) {};
+  rpc ReturnRentedBook (ReturnRentedBookRequest) returns (ReturnRentedBookReply) {};
+  rpc CancelRentRequestBook (CancelRentRequestBookRequest) returns (CancelRentRequestBookReply) {}
+}
+
+message HelloRequest {
+}
+
+message HelloReply {
+	bool is_successfull = 1;
+	int32 error_type = 2;
+	string error_message = 3;
+}
+
+
+
+message LibraryRegisterRequest {
+	string Name = 1;
+}
+
+message LibraryRegisterReply {
+	bool is_successfull = 1;
+	int32 error_type = 2;
+	string error_message = 3;
+	string auth_code = 4;
+}
+
+
+message LibraryEditRequest {
+	string auth_code = 1;
+	string Name = 2;
+}
+
+message LibraryEditReply {
+	bool is_successfull = 1;
+	int32 error_type = 2;
+	string error_message = 3;
+}
+
+
+message AddUserRequest {
+	string AuthCode = 1;
+	string FirstName = 2;
+	string LastName = 3;
+	string Username = 4;
+	string Password = 5;
+	string PhoneNumber = 6;
+	string PhoneNumberIsoCode = 7;
+	string EmailAddress = 8;
+	int32 Role = 9;
+}
+
+message AddUserReply {
+	bool is_successfull = 1;
+	int32 error_type = 2;
+	string error_message = 3;
+	string UserAuthCode = 4;
+}
+
+
+message AddBookRequest {
+	string AuthCode = 1;
+	string UserAuthCode = 2;
+	string Name = 3;
+	string Author = 4;
+	string Translator = 5;
+	string Publisher = 6;
+	int32 PublishedDate = 7;
+	string Circulation = 8;
+	int64 Price = 9;
+	string ISBN = 10;
+	bool HasImage = 11;
+	bytes ImageData = 12;
+	string Text = 13;
+}
+
+message AddBookReply {
+	bool is_successfull = 1;
+	int32 error_type = 2;
+	string error_message = 3;
+	string BookId = 4;
+}
+
+
+
+message RemoveBookRequest{	
+	string AuthCode = 1;
+	string UserAuthCode = 2;
+	string BookId = 3;
+}
+
+message RemoveBookReply{
+	bool is_successfull = 1;
+	int32 error_type = 2;
+	string error_message = 3;
+}
+
+
+message BookDetailRequest{
+	string UserAuthCode = 1;
+	string BookId = 2;
+}
+
+message BookDetailReply{
+	bool is_successfull = 1;
+	int32 error_type = 2;
+	string error_message = 3;
+	string Name = 4;
+	string Author = 5;
+	string Translator = 6;
+	string Publisher = 7;
+	int32 PublishedDate = 8;
+	string Circulation = 9;
+	int64 Price = 10;
+	string ISBN = 11;
+	bool HasImage = 12;
+	bytes ImageData = 13;
+	string BookId = 14;
+	string LibraryName = 15;
+	string LibraryId = 16;
+	bool HostLibrary = 17;
+	bool CanRead = 18;
+	string Text = 19;
+	bool RentedThisBook = 20;
+	string RentId = 21;
+	bool RentRequestedPendingNow = 22;
+	string RentRequestId = 23;
+	string LastRentRequestedRejectedResponseContext = 24;
+}
+
+message BookListRequest {
+	string UserAuthCode = 1;
+}
+
+message BookListReply{
+	bool is_successfull = 1;
+	int32 error_type = 2;
+	string error_message = 3;
+	repeated BookDetailReply Books = 4;
+}
+
+message BookRentingSystemListRequest{
+	string AuthCode = 1;
+	string UserAuthCode = 2;
+}
+
+message BookRentingSystemListReply{
+	bool is_successfull = 1;
+	int32 error_type = 2;
+	string error_message = 3;
+	repeated BookNewRentRequestList NewRentRequestList = 4;
+	repeated BookRentedList BookRentedList = 5;
+	repeated RentedBookList RentedBookList = 6;
+}
+
+message BookNewRentRequestList{
+	string RentRequestCode = 1;
+	string BookId = 2;
+	string BookName = 3;
+	string Context = 4;
+	string Time = 5;
+	string UserId = 6;
+	string UserFullName = 7;
+	string UserLibraryId = 8;
+	string UserLibraryName = 9;
+	bytes BookImageData = 10;
+}
+
+message BookRentedList{
+	string RentCode = 1;
+	string BookId = 2;
+	string BookName = 3;
+	string Time = 4;
+	string UserId = 5;
+	string UserFullName = 6;
+	string UserLibraryId = 7;
+	string UserLibraryName = 8;
+	bytes BookImageData = 9;
+}
+
+message RentedBookList{
+	string RentCode = 1;
+	string BookId = 2;
+	string BookName = 3;
+	string Time = 4;
+	string BookLibraryId = 5;
+	string BookLibraryName = 6;
+	bytes BookImageData = 7;
+}
+
+
+message BookRentingSystemNotificationCountRequest{
+	string AuthCode = 1;
+	string UserAuthCode = 2;
+}
+
+message BookRentingSystemNotificationCountReply{
+	bool is_successfull = 1;
+	int32 error_type = 2;
+	string error_message = 3;
+	int32 NewRentRequestCount = 4;
+}
+
+
+
+message RentABookRequest{
+	string UserAuthCode = 1;
+	string BookId = 2;
+	string Context = 3;
+}
+
+message RentABookReply{
+	bool is_successfull = 1;
+	int32 error_type = 2;
+	string error_message = 3;
+	string RentRequestId = 4;
+}
+
+
+message AcceptRentRequestRequest{
+	string UserAuthCode = 1;
+	string RentRequestId = 2;
+}
+
+message AcceptRentRequestReply{
+	bool is_successfull = 1;
+	int32 error_type = 2;
+	string error_message = 3;
+}
+
+
+message RejectRentRequestRequest{
+	string UserAuthCode = 1;
+	string RentRequestId = 2;
+	string ResponseContext = 3;
+}
+
+message RejectRentRequestReply{
+	bool is_successfull = 1;
+	int32 error_type = 2;
+	string error_message = 3;
+}
+
+
+
+message CancelRentRequestBookRequest{
+	string UserAuthCode = 1;
+	string RentRequestId = 2;
+}
+
+message CancelRentRequestBookReply{
+	bool is_successfull = 1;
+	int32 error_type = 2;
+	string error_message = 3;
+}
+
+
+
+message CancelRentBookRequest{
+	string UserAuthCode = 1;
+	string RentId = 2;
+}
+
+message CancelRentBookReply{
+	bool is_successfull = 1;
+	int32 error_type = 2;
+	string error_message = 3;
+}
+
+
+
+message ReturnRentedBookRequest{
+	string UserAuthCode = 1;
+	string RentId = 2;
+}
+
+message ReturnRentedBookReply{
+	bool is_successfull = 1;
+	int32 error_type = 2;
+	string error_message = 3;
+}
+
