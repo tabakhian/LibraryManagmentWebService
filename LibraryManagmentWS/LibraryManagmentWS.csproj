@@ -26,7 +26,7 @@
 
     <PackageReference Include="SmsIrRestfulNetCore" Version="1.1.4" />
 
-    <PackageReference Include="System.Drawing.Common" Version="4.5.1" />
+    <PackageReference Include="System.Drawing.Common" Version="4.7.2" />
   </ItemGroup>
 
 </Project>
